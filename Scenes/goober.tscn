@@ -10,9 +10,22 @@ height = 2.31
 radius = 0.355
 
 [node name="Goober" type="CharacterBody3D" unique_id=179625797]
+collision_layer = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=851273575]
 mesh = SubResource("CylinderMesh_43q1s")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=52493590]
 shape = SubResource("CylinderShape3D_fpajb")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="." unique_id=1115586575]
+path_height_offset = -1.0
+simplify_path = true
+avoidance_enabled = true
+height = 2.0
+radius = 2.0
+max_neighbors = 1
+use_3d_avoidance = true
+debug_enabled = true
+
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]
