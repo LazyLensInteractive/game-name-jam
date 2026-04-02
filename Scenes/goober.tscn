@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://omg40a3ke0i5"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_43q1s"]
+top_radius = 0.01
+bottom_radius = 0.7
+height = 2.31
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fpajb"]
+height = 2.31
+radius = 0.355
+
+[node name="Goober" type="CharacterBody3D" unique_id=179625797]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=851273575]
+mesh = SubResource("CylinderMesh_43q1s")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=52493590]
+shape = SubResource("CylinderShape3D_fpajb")
