@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://fatjgjlsrq6s" path="res://Scripts/PlayerMovement.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://bb2i6357is7ml" path="res://Scenes/node_3d.gd" id="2_bo1nx"]
+[ext_resource type="Script" uid="uid://co8ww5vkwa57c" path="res://Scenes/data_system.gd" id="3_8gbba"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7u77a"]
 albedo_color = Color(0.28485027, 0.28485027, 0.28485027, 1)
@@ -91,5 +92,8 @@ script = ExtResource("2_bo1nx")
 
 [node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="Node3D" unique_id=1305937761]
 multimesh = SubResource("MultiMesh_jjvhh")
+
+[node name="DataSystem" type="Node" parent="." unique_id=3406302]
+script = ExtResource("3_8gbba")
 
 [connection signal="timeout" from="Player/CharacterBody3D/Timer" to="Player/CharacterBody3D" method="_on_timer_timeout"]

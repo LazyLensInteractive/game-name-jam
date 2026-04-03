@@ -1,5 +1,5 @@
 extends CharacterBody3D
-
+var player_health = 500
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -25,7 +25,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	if Input.is_action_just_pressed("fire"):
-		weapon_shoot()
+		Engine.time_scale = 0.3
+	var location = self.global_position
+	if location != null:
+		get_tree().get_first_node_in_group("GuyManager").player_dmg(location, 0.5)
 
 	move_and_slide()
 func weapon_shoot():
@@ -43,4 +46,9 @@ func _on_timer_timeout() -> void:
 	pass
 	#weapon_shoot()#timer for default weapon to fire
 	#$Timer.start()#idk if this is needed but here anyway
-	
+func player_hit():
+	if player_health > 0:
+		player_health -= 1
+	if player_health <= 0:
+		print("dead")
+	print(player_health)

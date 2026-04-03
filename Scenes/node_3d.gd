@@ -4,8 +4,9 @@ extends Node3D
 @onready var multmeh: MultiMeshInstance3D = $MultiMeshInstance3D 
 var how_many = 5000
 var locations = [] #this holds all positions is it a good way to do this? (genuine question idk)
-var speed = 4 # i think this is m/s i honestly dont know lmao
+var speed = 2# i think this is m/s i honestly dont know lmao
 var how_many_dead = 0
+var times_hit = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for i in range(how_many):
@@ -41,3 +42,14 @@ func dmg_location(hit_area: Vector3, hit_radius: float):#2 required calls here h
 			multmeh.multimesh.set_instance_transform(i, locations[i])#redraws the mesh with new deaths if some happened
 			how_many_dead += 1 #how many have died unused for now but will be used in shop for some cards 
 			print(how_many_dead) #debug text
+func player_dmg(detect_area: Vector3, radius: float): #basicly a copy of above for enemy to player detection too lazy to make something better 
+	
+	for i in range(how_many):
+		if locations[i].origin.y < -500:
+			continue
+		var distance = locations[i].origin.distance_to(detect_area)
+		if distance < radius:
+			locations[i].origin = Vector3(0, -1000, 0)
+			times_hit += 1
+			get_tree().get_first_node_in_group("Player").player_hit()
+		
