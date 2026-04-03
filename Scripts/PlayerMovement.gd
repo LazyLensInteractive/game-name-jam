@@ -1,7 +1,7 @@
 extends CharacterBody3D
 var player_health = 500
 
-const SPEED = 5.0
+var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
 
@@ -11,9 +11,10 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
+	if Input.is_action_pressed("ui_accept") and is_on_floor():
+		SPEED = 8
+	if Input.is_action_just_released("ui_accept"):
+		SPEED = 5
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("left", "right", "up", "down")
@@ -25,10 +26,10 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	if Input.is_action_just_pressed("fire"):
-		Engine.time_scale = 0.3
+		weapon_shoot()
 	var location = self.global_position
 	if location != null:
-		get_tree().get_first_node_in_group("GuyManager").player_dmg(location, 0.5)
+		get_tree().get_first_node_in_group("GuyManager").player_dmg(location, 4.5)
 
 	move_and_slide()
 func weapon_shoot():

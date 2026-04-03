@@ -27,8 +27,8 @@ func _physics_process(delta: float) -> void:
 	for i in range(how_many):
 		var current_locations = locations[i] #grab all location data we just made
 		var current_positions = current_locations.origin #get position of each location in our array 
-		var direction = (player.global_position - current_positions).normalized() #find where the player is
-		current_positions += direction * speed * delta #change all positions based on delta and speed var
+		#var direction = (player.global_position - current_positions).normalized() #find where the player is
+		#current_positions += direction * speed * delta #change all positions based on delta and speed var
 		current_locations.origin = current_positions #new orgion of locations becomes the position
 		locations[i] = current_locations #write new locations to array
 		multmeh.multimesh.set_instance_transform(i, current_locations)#redraw multimesh
