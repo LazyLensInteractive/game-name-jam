@@ -9,7 +9,7 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
+	
 	# Handle jump.
 	if Input.is_action_pressed("ui_accept") and is_on_floor():
 		SPEED = 8
@@ -29,7 +29,7 @@ func _physics_process(delta: float) -> void:
 		weapon_shoot()
 	var location = self.global_position
 	if location != null:
-		get_tree().get_first_node_in_group("GuyManager").player_dmg(location, 4.5)
+		get_tree().get_first_node_in_group("GuyManager").dmg_location(location, 1.5)
 	RenderingServer.global_shader_parameter_set("player_pos", global_position) #update the shader for the current player position
 
 	move_and_slide()
@@ -39,7 +39,7 @@ func weapon_shoot():
 	var raycast_start = camera.project_ray_origin(mouse_location)
 	var raycast_end = raycast_start + camera.project_ray_normal(mouse_location) * 2000 #big ass ray make sure it collides with the floor in order to "shoot"
 	var raycast_create = PhysicsRayQueryParameters3D.create(raycast_start, raycast_end) #calls the actual creation of the ray
-	raycast_create.exclude = [self] #exclude the player body from making a raycast hit
+	raycast_create.exclude = [self.get_rid()] #exclude the player body from making a raycast hit (idk what .get_rid() does but self was being wierd)
 	var hit = get_world_3d().direct_space_state.intersect_ray(raycast_create) #finds where the ray intersected in 3d space 
 	if hit:
 		var hit_location = hit.position
