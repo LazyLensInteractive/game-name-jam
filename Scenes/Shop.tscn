@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dlq3b3syh13jy"]
+
+[ext_resource type="Script" uid="uid://b85criv8g58pc" path="res://Scripts/shop.gd" id="1_kjfcx"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7ae35"]
+
+[sub_resource type="TextMesh" id="TextMesh_kjfcx"]
+text = "Shop here!!"
+
+[node name="Node3D" type="Node3D" unique_id=440672862]
+
+[node name="Area3D" type="Area3D" parent="." unique_id=342138391]
+script = ExtResource("1_kjfcx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=708531330]
+shape = SubResource("BoxShape3D_7ae35")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D" unique_id=903912807]
+transform = Transform3D(0.8956962, 0, 0.44466645, 0, 1, 0, -0.44466645, 0, 0.8956962, 0, 0.6197013, 0)
+mesh = SubResource("TextMesh_kjfcx")
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]

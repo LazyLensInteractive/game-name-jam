@@ -9,7 +9,7 @@ var player_exp = 0
 var player_money = 0
 var player_strength = 5
 
-func object_data(count: int): #this function should only be called once at ready from the node spawning script but clears are there just in case something weird happens 
+func object_data(count: int): #this function should only be called once at ready from the node spawning script but clears are there just in case something weird happens or we want levels
 	object_health.clear()
 	object_exp.clear()
 	object_money.clear()
