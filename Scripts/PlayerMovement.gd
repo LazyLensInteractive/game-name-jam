@@ -30,6 +30,7 @@ func _physics_process(delta: float) -> void:
 	var location = self.global_position
 	if location != null:
 		get_tree().get_first_node_in_group("GuyManager").player_dmg(location, 4.5)
+	RenderingServer.global_shader_parameter_set("player_pos", global_position) #update the shader for the current player position
 
 	move_and_slide()
 func weapon_shoot():

@@ -3,14 +3,7 @@
 [ext_resource type="Script" uid="uid://fatjgjlsrq6s" path="res://Scripts/PlayerMovement.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://bb2i6357is7ml" path="res://Scenes/node_3d.gd" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://co8ww5vkwa57c" path="res://Scenes/data_system.gd" id="3_8gbba"]
-[ext_resource type="Shader" uid="uid://isbu380vyv20" path="res://Scenes/test.gdshader" id="3_jjvhh"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7u77a"]
-albedo_color = Color(0.28485027, 0.28485027, 0.28485027, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_7u77a"]
-material = SubResource("StandardMaterial3D_7u77a")
-size = Vector3(500, 0.2, 500)
+[ext_resource type="Shader" uid="uid://isbu380vyv20" path="res://Shader/test.gdshader" id="3_jjvhh"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jjvhh"]
 size = Vector3(500, 0.2, 500)
@@ -20,8 +13,8 @@ size = Vector3(500, 0.2, 500)
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6t5aa"]
 
 [sub_resource type="Gradient" id="Gradient_jjvhh"]
-offsets = PackedFloat32Array(0, 0.52307695, 0.96153843)
-colors = PackedColorArray(0, 0.65882355, 0, 1, 0, 0, 0, 1, 0.5817177, 0.18611541, 0.56090593, 1)
+offsets = PackedFloat32Array(0, 0.838)
+colors = PackedColorArray(0, 0.65882355, 0, 1, 0.5817177, 0.18611541, 0.56090593, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_kry3j"]
 gradient = SubResource("Gradient_jjvhh")
@@ -30,6 +23,7 @@ gradient = SubResource("Gradient_jjvhh")
 render_priority = 0
 shader = ExtResource("3_jjvhh")
 shader_parameter/color_ramp = SubResource("GradientTexture1D_kry3j")
+shader_parameter/curve_strength = 0.006
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_8gbba"]
 material = SubResource("ShaderMaterial_6bp64")
@@ -48,9 +42,6 @@ buffer = PackedFloat32Array(0, 2.5e-44, 1e-45, 0, 2.7e-44, 2.5e-44, 1e-45, 2.4e-
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=79533126]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1599147773]
-mesh = SubResource("BoxMesh_7u77a")
-
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=553915460]
 shape = SubResource("BoxShape3D_jjvhh")
 
@@ -68,9 +59,7 @@ shape = SubResource("CapsuleShape3D_6t5aa")
 
 [node name="Camera3D" type="Camera3D" parent="Player/CharacterBody3D" unique_id=2023595209]
 transform = Transform3D(1, 0, 0, 0, 0.49974322, 0.86617374, 0, -0.86617374, 0.49974322, 0, 4.472069, 3.4161193)
-projection = 2
 current = true
-fov = 95.3
 size = 3.3
 near = 1.7
 
@@ -81,6 +70,10 @@ target_position = Vector3(0, 0, -50)
 [node name="Timer" type="Timer" parent="Player/CharacterBody3D" unique_id=2009935302]
 wait_time = 1.3159999999999998
 autostart = true
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Player/CharacterBody3D" unique_id=94134930]
+light_energy = 16.0
+omni_range = 1156.2932
 
 [node name="Node3D" type="Node3D" parent="." unique_id=1536797377 groups=["GuyManager"]]
 script = ExtResource("2_bo1nx")

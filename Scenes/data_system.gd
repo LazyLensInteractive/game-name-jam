@@ -7,6 +7,9 @@ var stats = []
 var enemy_data = []
 var current_enemy_health_multi = 1
 var current_player_dmg_multi = 1
+var player_exp = 0
+var player_money = 0
+var player_strength = 0 
 @onready var manager = get_tree().get_first_node_in_group("GuyManager")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

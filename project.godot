@@ -15,6 +15,10 @@ run/main_scene="uid://durf42liosbv0"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg")
+
 [global_group]
 
 Player=""
@@ -59,3 +63,10 @@ pathfinding/max_threads=24
 [rendering]
 
 rendering_device/driver.windows="d3d12"
+
+[shader_globals]
+
+player_pos={
+"type": "vec3",
+"value": Vector3(0, 0, 0)
+}
