@@ -1,5 +1,4 @@
 extends Node3D
-
 @onready var multmeh: MultiMeshInstance3D = $MultiMeshInstance3D 
 var how_many = 5000
 var locations = [] #this holds all positions is it a good way to do this? (genuine question idk)

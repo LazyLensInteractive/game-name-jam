@@ -3,7 +3,7 @@ var player_health = 500
 
 var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
-
+@onready var label: Label = $"../../ui/Label"
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -26,11 +26,15 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	if Input.is_action_just_pressed("fire"):
-		weapon_shoot()
+		pass #weapon_shoot()
 	var location = self.global_position
 	if location != null:
 		get_tree().get_first_node_in_group("GuyManager").dmg_location(location, 1.5)
 	RenderingServer.global_shader_parameter_set("player_pos", global_position) #update the shader for the current player position
+	if label != null:
+		label.text = "mhhh cash:" + str(GlobalData.player_money)
+	if label == null:
+		print("im broken")
 
 	move_and_slide()
 func weapon_shoot():
@@ -44,6 +48,7 @@ func weapon_shoot():
 	if hit:
 		var hit_location = hit.position
 		get_tree().get_first_node_in_group("GuyManager").dmg_location(hit_location, 4.0) #go to the dmg_location function to read comment about this one and group discription 
+	
 func _on_timer_timeout() -> void:
 	pass
 	#weapon_shoot()#timer for default weapon to fire

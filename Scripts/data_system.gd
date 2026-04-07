@@ -6,8 +6,8 @@ var object_money = []
 var exp_multi = 1
 var money_multi = 1
 var player_exp = 0
-var player_money = 0
-var player_strength = 5
+var player_money: int = 0
+var player_strength = 5 #change based on what objects you want the player to be able to run over or not if strength is larger than health of an object it can kill it 
 
 func object_data(count: int): #this function should only be called once at ready from the node spawning script but clears are there just in case something weird happens or we want levels
 	object_health.clear()
@@ -29,4 +29,4 @@ func data_calc(i: int):
 	var earned_exp = object_exp[i]
 	player_money += earned_money
 	player_exp += earned_exp
-	print("Killed Goober ", i, " | Gained: $", earned_money, " | Total: $", player_money)
+	

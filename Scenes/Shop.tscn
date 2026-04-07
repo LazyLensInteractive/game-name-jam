@@ -6,6 +6,7 @@
 
 [sub_resource type="TextMesh" id="TextMesh_kjfcx"]
 text = "Shop here!!"
+font_size = 56
 
 [node name="Node3D" type="Node3D" unique_id=440672862]
 
@@ -19,4 +20,46 @@ shape = SubResource("BoxShape3D_7ae35")
 transform = Transform3D(0.8956962, 0, 0.44466645, 0, 1, 0, -0.44466645, 0, 0.8956962, 0, 0.6197013, 0)
 mesh = SubResource("TextMesh_kjfcx")
 
+[node name="ShopUI" type="CanvasLayer" parent="." unique_id=740563215]
+
+[node name="Panel" type="Panel" parent="ShopUI" unique_id=1868841677]
+offset_left = -5801.0
+offset_top = -5907.0
+offset_right = -4752.0
+offset_bottom = -5396.0
+
+[node name="Button" type="Button" parent="ShopUI/Panel" unique_id=758163919]
+layout_mode = 0
+offset_left = 93.0
+offset_top = 365.0
+offset_right = 219.0
+offset_bottom = 396.0
+text = "Speed Upgrade"
+
+[node name="Button2" type="Button" parent="ShopUI/Panel" unique_id=1149815253]
+layout_mode = 0
+offset_left = 314.0
+offset_top = 368.0
+offset_right = 441.0
+offset_bottom = 399.0
+text = "Range Upgrade"
+
+[node name="Button3" type="Button" parent="ShopUI/Panel" unique_id=1199900945]
+layout_mode = 0
+offset_left = 560.0
+offset_top = 370.0
+offset_right = 626.0
+offset_bottom = 401.0
+text = "Bombs!"
+
+[node name="Button4" type="Button" parent="ShopUI/Panel" unique_id=737185528]
+layout_mode = 0
+offset_left = 806.0
+offset_top = 373.0
+offset_right = 946.0
+offset_bottom = 404.0
+text = "There is no game"
+
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
+[connection signal="body_exited" from="Area3D" to="Area3D" method="_on_body_exited"]
+[connection signal="pressed" from="ShopUI/Panel/Button" to="Area3D" method="_on_button_pressed"]
