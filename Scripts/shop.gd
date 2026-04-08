@@ -1,7 +1,7 @@
 extends Area3D
 @onready var player = get_tree().get_first_node_in_group("Player")
 @onready var panel: Panel = $"../ShopUI/Panel"
-
+var can_buy = false #this fixes a bug i dont understand but yk bandaid fix by just checking again
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
@@ -19,13 +19,18 @@ func _on_body_entered(body: Node3D) -> void:
 		shop_open()
 		print("player in area")
 func shop_open():
+	can_buy = true
 	panel.position = Vector2(50, 70)
 func shop_close():
+	can_buy = false
 	panel.position = Vector2(5000, 7000)
 
 
 func _on_button_pressed() -> void:
-	upgrade_button_pressed("speed")
+	if can_buy == true:
+		upgrade_button_pressed("speed")
+	else:
+		print("the bug happened check it out")
 #holds shop items and the cost 
 var shop_items = {
 	"speed": {

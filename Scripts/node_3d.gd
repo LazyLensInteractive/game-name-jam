@@ -1,58 +1,65 @@
 extends Node3D
-@onready var multmeh: MultiMeshInstance3D = $MultiMeshInstance3D 
+#idk why i named these vars this just go off the path name im tired alr
+@onready var lowest_level_multimesh: MultiMeshInstance3D = $"Region 1"
+@onready var second_multimesh: MultiMeshInstance3D = $"Region 2"
+@onready var small_items: Node3D = $"../Spawn Locations/Region 1 Spawn"
+@onready var second_items: Node3D = $"../Spawn Locations/Region 2 Spawn"
+
 var how_many = 5000
-var locations = [] #this holds all positions is it a good way to do this? (genuine question idk)
-var speed = 2 # i think this is m/s i honestly dont know lmao
+var how_many_second = 1000 
+var locations = [] 
+var locations_second = [] 
+var start_index_first = 0
+var start_index_second = 0
+var is_ready_to_hit = false
 var how_many_dead = 0
 var times_hit = 0
-
+#i rewrrote most of this today and delted the comments its mostly the same as last time just better as i read the docs for once uhh check github for an older version or wait till i add comments got more stuff to do
 func _ready() -> void:
-	# Tell GlobalData to prepare the health/exp arrays for our 5000 objects
+	start_index_first = GlobalData.object_health.size()
 	GlobalData.object_data(how_many)
-	
 	for i in range(how_many):
-		var begin_pos = Vector3(randf_range(-80, 80), 0, randf_range(-80, 80))
-		var t = Transform3D() 
-		t = t.translated(begin_pos)
-		if GlobalData.object_health[i] > 1:
-			t = t.scaled(Vector3(2, 4, 2)) # Big Building
+		var global_i = start_index_first + i
+		var begin_pos = small_items.global_position + Vector3(randf_range(-10, 20), 0, randf_range(-10, 20))
+		var t = Transform3D().translated(begin_pos)
+		if GlobalData.object_health[global_i] > 1:
+			t = t.scaled(Vector3(2, 4, 2))
 		else:
-			t = t.scaled(Vector3(0.5, 0.5, 0.5)) # Small Goober
+			t = t.scaled(Vector3(0.5, 0.5, 0.5))
 		locations.append(t)
-		multmeh.multimesh.set_instance_transform(i, t)
-func _physics_process(delta: float) -> void:
-	pass
+		lowest_level_multimesh.multimesh.set_instance_transform(i, t)
+		if i % 500 == 0: await get_tree().process_frame
+	start_index_second = GlobalData.object_health.size()
+	GlobalData.object_data(how_many_second)
+	for i in range(how_many_second):
+		var global_i = start_index_second + i
+		var begin_pos = second_items.global_position + Vector3(randf_range(-5, 5), 0, randf_range(-5, 5))
+		var t = Transform3D().translated(begin_pos)
+		if GlobalData.object_health[global_i] > 1:
+			t = t.scaled(Vector3(2, 4, 2))
+		else:
+			t = t.scaled(Vector3(0.5, 0.5, 0.5))
+		locations_second.append(t)
+		second_multimesh.multimesh.set_instance_transform(i, t)
+		if i % 500 == 0: await get_tree().process_frame #helps performace by loading in 500 entry chunks instead of all at once 
+	is_ready_to_hit = true
 
-func dmg_location(hit_area: Vector3, hit_radius: float): #2 required calls here hit area will be the location of a raycast hit and hit radius can be changed based on how close the raycast had to be to call a enemy dead
-	for i in range(how_many):
-		if locations[i].origin.y < -500: #just a check to make sure the enemy isint already dead
-			continue
-			
-		var distance = locations[i].origin.distance_to(hit_area)
-		
-		if distance < hit_radius:
-			if GlobalData.player_strength >= GlobalData.object_health[i]:
-				GlobalData.player_exp += GlobalData.object_exp[i]
-				GlobalData.player_money += GlobalData.object_money[i]
-				
-				# Move the guy 1000m down and calls it dead
+func dmg_location(hit_area: Vector3, hit_radius: float):
+	if not is_ready_to_hit: return #return if still loading idealy this will never be the case as the player shouldent be able to collect before the arrays are loaded but it happens cause its random spawning
+	var radius_sq = hit_radius * hit_radius 
+	for i in range(locations.size()):
+		if locations[i].origin.y < -500: continue
+		if locations[i].origin.distance_squared_to(hit_area) < radius_sq:
+			var global_i = start_index_first + i
+			if GlobalData.player_strength >= GlobalData.object_health[global_i]:
 				locations[i].origin = Vector3(0, -1000, 0)
-				multmeh.multimesh.set_instance_transform(i, locations[i]) #redraws the mesh with new deaths if some happened
-				how_many_dead += 1 #how many have died unused for now but will be used in shop for some cards 
-				GlobalData.data_calc(i)
-				#print(how_many_dead) #debug text
-
-
-#outdated function its still here just in case its useful i dont think it will be though 
-func player_dmg(detect_area: Vector3, radius: float): #basicly a copy of above for enemy to player detection too lazy to make something better 
-	for i in range(how_many):
-		if locations[i].origin.y < -500:
-			continue
-		var distance = locations[i].origin.distance_to(detect_area)
-		if distance < radius:
-			locations[i].origin = Vector3(0, -1000, 0)
-			multmeh.multimesh.set_instance_transform(i, locations[i])
-			times_hit += 1
-			var p = get_tree().get_first_node_in_group("Player")
-			if p:
-				p.player_hit()
+				lowest_level_multimesh.multimesh.set_instance_transform(i, locations[i])
+				GlobalData.data_calc(global_i)
+	for i in range(locations_second.size()):
+		if locations_second[i].origin.y < -500: continue
+		if locations_second[i].origin.distance_squared_to(hit_area) < radius_sq:
+			var global_i = start_index_second + i
+			if GlobalData.player_strength >= GlobalData.object_health[global_i]:
+				locations_second[i].origin = Vector3(0, -1000, 0)
+				second_multimesh.multimesh.set_instance_transform(i, locations_second[i])
+				GlobalData.data_calc(global_i)
