@@ -1,12 +1,16 @@
 extends CharacterBody3D
 var player_health = 500
-
+var camera_sensitivty = 0.001 #self explanitory lower number slower 
 var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 @onready var label: Label = $"../../ui/Label"
-
+@export var camera : Node3D #not a camera node but trust we dont want the camera directly bound to the player so we do some other stuff check out the camera script for more info 
+func _ready() -> void:
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED #your mouse is mine wahhhh 
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		rotate_y(-event.relative.x * camera_sensitivty) #rotate the player body so w continues moving forward based on the camera
 func _physics_process(delta: float) -> void:
-	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 	
@@ -15,10 +19,14 @@ func _physics_process(delta: float) -> void:
 		SPEED = 8
 	if Input.is_action_just_released("ui_accept"):
 		SPEED = 5
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir := Input.get_vector("left", "right", "up", "down")
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var forward = camera.global_basis.z
+	var right = camera.global_basis.x
+	forward.y = 0
+	right.y = 0
+	forward = forward.normalized()
+	right = right.normalized()
+	var direction = (forward * input_dir.y + right * input_dir.x).normalized()
 	if direction:
 		velocity.x = direction.x * SPEED
 		velocity.z = direction.z * SPEED
@@ -35,7 +43,9 @@ func _physics_process(delta: float) -> void:
 		label.text = "mhhh cash:" + str(GlobalData.player_money)
 	if label == null:
 		print("im broken")
-
+		
+#camera stuff
+	
 	move_and_slide()
 func weapon_shoot():
 	var camera = get_viewport().get_camera_3d() 

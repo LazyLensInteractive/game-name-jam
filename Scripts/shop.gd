@@ -19,9 +19,11 @@ func _on_body_entered(body: Node3D) -> void:
 		shop_open()
 		print("player in area")
 func shop_open():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	can_buy = true
 	panel.position = Vector2(50, 70)
 func shop_close():
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	can_buy = false
 	panel.position = Vector2(5000, 7000)
 

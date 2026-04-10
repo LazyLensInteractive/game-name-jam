@@ -12,7 +12,7 @@ var player_strength = 1
 func object_data(count: int):
 	for i in range(count):
 		var random = randf()
-		if random < 0.2:
+		if random < 2:
 			object_health.append(1)
 			object_exp.append(5 * exp_multi)
 			object_money.append(1 * money_multi)
