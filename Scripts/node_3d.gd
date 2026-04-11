@@ -12,7 +12,7 @@ extends Node3D
 
 var how_many = 5000
 var how_many_second = 1000 
-var how_many_third = 1000
+var how_many_third = 350
 var how_many_forth = 1000
 
 var locations = [] 
@@ -65,7 +65,7 @@ func _ready() -> void:
 	GlobalData.object_data(how_many_third)
 	for i in range(how_many_third):
 		var global_i = start_index_third + i
-		var begin_pos = region_3_spawn.global_position + Vector3(randf_range(-10, 20), 0, randf_range(-10, 20))
+		var begin_pos = region_3_spawn.global_position + Vector3(randf_range(-510, 520), 0, randf_range(-510, 120))
 		var t = Transform3D().translated(begin_pos)
 		if GlobalData.object_health[global_i] > 1:
 			t = t.scaled(Vector3(2, 4, 2))
