@@ -57,10 +57,7 @@ func generate_transform(item: GlobalData.Item) -> Transform3D:
 func dmg_location(hit_area: Vector3, hit_radius: float):
 	if not is_ready_to_hit: return #return if still loading idealy this will never be the case as the player shouldent be able to collect before the arrays are loaded but it happens cause its random spawning
 	var radius_sq = hit_radius * hit_radius 
-	print("Hit area: %d", hit_area)
 	for i in range(items.size()):
-		if (i == 1):
-			print(items[i].transform.origin.distance_squared_to(hit_area))
 		var item := items[i]
 		if item.transform.origin.y <= -500:
 			continue
