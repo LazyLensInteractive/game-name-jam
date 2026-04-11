@@ -11,11 +11,6 @@ var money_multi := 1
 
 var is_ready_to_hit = false
 
-# Mke region scene
-# Add spawn location as an export variable
-# Export spawn variables and tuning data
-# Damage location exposed public funcction that acts like these ones
-# Player in global data
 func _ready() -> void:
 	generate_items(item_count)
 	
@@ -62,6 +57,7 @@ func dmg_location(hit_area: Vector3, hit_radius: float):
 			continue
 		if item.transform.origin.distance_squared_to(hit_area) < radius_sq:
 			if GlobalData.player.strength >= item.item.health:
+				GlobalData.player.add_item(item.item)
+				CashNumbersBus.display_number(item.item.money, item.transform.origin)
 				item.transform.origin = Vector3(0, -1000, 0) # Send to the shadow realm
 				multimesh.multimesh.set_instance_transform(i, item.transform)
-				GlobalData.player.add_item(item.item)
