@@ -14,10 +14,11 @@ func _ready():
 		add_child(label)
 		pool.append(label)
 
+# When we run over the objects this runs
 func _on_squashed(value: int, location: Vector3):
 	var label = _get_from_pool()
 	if label:
-		label.text = str(value)
+		label.text = "$" + str(value)
 		label.global_position = location
 		animate_label(label)
 
