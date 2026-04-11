@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 GlobalData="*uid://co8ww5vkwa57c"
 CashNumbersBus="*uid://ia7pvyae6288"
 
+[editor]
+
+version_control/plugin_name="GitPlugin"
+version_control/autoload_on_startup=true
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/terrain_3d/plugin.cfg")
