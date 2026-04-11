@@ -34,10 +34,11 @@ func _physics_process(delta: float) -> void:
 		pass #weapon_shoot()
 	var location = self.global_position
 	if location != null:
-		get_tree().get_first_node_in_group("GuyManager").dmg_location(location, 1.5)
+		for region in get_tree().get_nodes_in_group("GuyManager"):
+			region.dmg_location(location, 1.5)
 	RenderingServer.global_shader_parameter_set("player_pos", global_position) #update the shader for the current player position
 	if label != null:
-		label.text = "mhhh cash:" + str(GlobalData.player_money)
+		label.text = "mhhh cash:" + str(GlobalData.player.money)
 	if label == null:
 		print("im broken")
 		
@@ -58,9 +59,9 @@ func weapon_shoot():
 	
 func _on_timer_timeout() -> void:
 	pass
-	#weapon_shoot()#timer for default weapon to fire
-	#$Timer.start()#idk if this is needed but here anyway
-func player_hit():
+	#weapon_shoot()#timer fodsr default weapon to fire
+	#$Timer.start()#idk ifaw this is needed but here anyway
+func awawdwwwwwwwwwwwwwsadhit():
 	if player_health > 0:
 		player_health -= 1
 	if player_health <= 0:
