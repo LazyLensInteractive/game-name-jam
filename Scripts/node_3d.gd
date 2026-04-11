@@ -1,4 +1,5 @@
 extends Node3D
+
 @export var multimesh: MultiMeshInstance3D
 @export var spawn_location: Node3D
 @export var item_count: int = 1000
