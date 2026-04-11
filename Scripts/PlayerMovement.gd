@@ -1,24 +1,21 @@
 extends CharacterBody3D
 var player_health = 500
 var camera_sensitivty = 0.001 #self explanitory lower number slower 
-var SPEED = 5.0
+const BASE_SPEED_MULTIPLIER = 5
+var base_speed: float = 0.0
 const JUMP_VELOCITY = 4.5
 @onready var label: Label = $"../../ui/Label"
 @export var camera : Node3D #not a camera node but trust we dont want the camera directly bound to the player so we do some other stuff check out the camera script for more info 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED #your mouse is mine wahhhh 
+	_update_base_speed()
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate_y(-event.relative.x * camera_sensitivty) #rotate the player body so w continues moving forward based on the camera
 func _physics_process(delta: float) -> void:
-	if not is_on_floor():
-		velocity += get_gravity() * delta
-	
-	# Handle jump.
-	if Input.is_action_pressed("ui_accept") and is_on_floor():
-		SPEED = 8
-	if Input.is_action_just_released("ui_accept"):
-		SPEED = 5
+	var current_speed = base_speed
+	if Input.is_action_pressed("ui_accept"):
+		current_speed *= 2.0
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	var forward = camera.global_basis.z
 	var right = camera.global_basis.x
@@ -28,11 +25,11 @@ func _physics_process(delta: float) -> void:
 	right = right.normalized()
 	var direction = (forward * input_dir.y + right * input_dir.x).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * current_speed
+		velocity.z = direction.z * current_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, current_speed)
+		velocity.z = move_toward(velocity.z, 0, current_speed)
 	if Input.is_action_just_pressed("fire"):
 		pass #weapon_shoot()
 	var location = self.global_position
@@ -69,3 +66,8 @@ func player_hit():
 	if player_health <= 0:
 		print("dead")
 	print(player_health)
+func _update_base_speed() -> void:
+	var level = GlobalData.player_upgrades["speed"]
+	base_speed = float(level) * BASE_SPEED_MULTIPLIER
+	if base_speed == 0:
+		base_speed = 0.5

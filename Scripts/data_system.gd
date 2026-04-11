@@ -24,3 +24,11 @@ func object_data(count: int):
 func data_calc(i: int):
 	player_money += object_money[i]
 	player_exp += object_exp[i]
+var player_upgrades = {
+	"strength": 0,
+	"speed": 0,
+	"range": 0,
+	"bomb": 0,
+	"boost": 0,
+	"roller": 0
+}
