@@ -71,4 +71,4 @@ func _update_base_speed() -> void:
 	var level = GlobalData.player.upgrades["speed"]
 	base_speed = float(level) * BASE_SPEED_MULTIPLIER
 	if base_speed == 0:
-		base_speed = 0.5
+		base_speed = 3.5
