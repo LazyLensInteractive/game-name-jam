@@ -68,7 +68,7 @@ func hit():
 		print("dead")
 	print(player_health)
 func _update_base_speed() -> void:
-	var level = GlobalData.player_upgrades["speed"]
+	var level = GlobalData.player.upgrades["speed"]
 	base_speed = float(level) * BASE_SPEED_MULTIPLIER
 	if base_speed == 0:
 		base_speed = 0.5
