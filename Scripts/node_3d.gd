@@ -93,17 +93,6 @@ func _ready() -> void:
 func dmg_location(hit_area: Vector3, hit_radius: float):
 	if not is_ready_to_hit: return #return if still loading idealy this will never be the case as the player shouldent be able to collect before the arrays are loaded but it happens cause its random spawning
 	var radius_sq = hit_radius * hit_radius 
-<<<<<<< HEAD
-	for i in range(items.size()):
-		var item := items[i]
-		if item.transform.origin.y <= -500:
-			continue
-		if item.transform.origin.distance_squared_to(hit_area) < radius_sq:
-			if GlobalData.player.strength >= item.item.health:
-				item.transform.origin = Vector3(0, -1000, 0) # Send to the shadow realm
-				multimesh.multimesh.set_instance_transform(i, item.transform)
-				GlobalData.player.add_item(item.item)
-=======
 	for i in range(locations.size()):
 		if locations[i].origin.y < -500: continue
 		if locations[i].origin.distance_squared_to(hit_area) < radius_sq:
@@ -136,4 +125,3 @@ func dmg_location(hit_area: Vector3, hit_radius: float):
 				locations_forth[i].origin = Vector3(0, -1000, 0)
 				region_4.multimesh.set_instance_transform(i, locations_forth[i])
 				GlobalData.data_calc(global_i)
->>>>>>> parent of f0b4e4e (Cleaned up region code & settled conflicts)
