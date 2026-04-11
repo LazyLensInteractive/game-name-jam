@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://b2w275ibm3s4"]
-
-[ext_resource type="Script" uid="uid://bb2i6357is7ml" path="res://Scripts/node_3d.gd" id="1_pwj6g"]
-
-[node name="Region Manager" type="Node3D" unique_id=689852450 groups=["GuyManager"]]
-script = ExtResource("1_pwj6g")

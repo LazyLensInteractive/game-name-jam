@@ -8,7 +8,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	pass
 func _on_body_exited(body: Node3D) -> void:
 	if body == player:
@@ -65,9 +65,9 @@ func upgrade_button_pressed(type: String) -> void:
 	if shop_items[type].has(next_level): #checks if the type has a next value if not it assumes max level
 		var item_data = shop_items[type][next_level]
 		var price = item_data["cost"] #i feel like this is self explanitory at this point and im getting tired these coments are takeing me out
-		if GlobalData.player.money >= price:
-			GlobalData.player.money -= price
-			GlobalData.player.upgrades[type] = next_level
+		if GlobalData.player_money >= price:
+			GlobalData.player_money -= price
+			GlobalData.player_upgrades[type] = next_level
 			print("upgraded wow so cool")
 			print(GlobalData.player_upgrades)
 			#shop_text_update()   ignore for now but just make updating ui tomorrow 

@@ -1,4 +1,0 @@
-[gd_scene format=3 uid="uid://c25ffr1fwjnsm"]
-
-[node name="Label" type="Label3D" unique_id=773980600]
-billboard = 1

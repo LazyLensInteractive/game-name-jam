@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 GlobalData="*uid://co8ww5vkwa57c"
-CashNumbersBus="*uid://ia7pvyae6288"
 
 [editor_plugins]
 

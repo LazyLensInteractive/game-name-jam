@@ -1,43 +1,34 @@
 extends Node
 
-var player: Player = Player.new()
+var object_health = []
+var object_exp = []
+var object_money = []
+var exp_multi = 1
+var money_multi = 1
+var player_exp = 0
+var player_money: int = 0
+var player_strength = 1 
+#redid this function to be able tp handle more than one multimesh its also simplified
+func object_data(count: int):
+	for i in range(count):
+		var random = randf()
+		if random < 2:
+			object_health.append(1)
+			object_exp.append(5 * exp_multi)
+			object_money.append(1 * money_multi)
+		else:
+			object_health.append(3)
+			object_exp.append(15 * exp_multi)
+			object_money.append(5 * money_multi)
 
-class Player:
-	var exp := 0
-	var money: int = 0
-	var strength := 1 
-
-	var upgrades = {
-		"strength": 0,
-		"speed": 0,
-		"range": 0,
-		"bomb": 0,
-		"boost": 0,
-		"roller": 0
-	}
-	
-	func _init() -> void:
-		pass
-	
-	func add_item(item: Item):
-		exp += item.exp
-		money += item.money
-
-class PhysicalItem:
-	var item: Item
-	var transform: Transform3D
-	
-	func _init(item: Item, transform: Transform3D) -> void:
-		self.item = item
-		self.transform = transform
-
-class Item:
-	var health: int
-	var exp: int
-	var money: int
-	
-	func _init(health, exp, money) -> void:
-		self.health = health
-		self.exp = exp
-		self.money = money
->>>>>>> f5dd66e (Cleaned up region code)
+func data_calc(i: int):
+	player_money += object_money[i]
+	player_exp += object_exp[i]
+var player_upgrades = {
+	"strength": 0,
+	"speed": 0,
+	"range": 0,
+	"bomb": 0,
+	"boost": 0,
+	"roller": 0
+}
