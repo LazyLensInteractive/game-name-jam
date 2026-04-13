@@ -3,13 +3,9 @@
 // edited by me with a few additions im pretty dumb when it comes to shader code so its mostly copied from other shaders and a frankenstine of a shader
 shader_type spatial;
 uniform sampler2D color_ramp : source_color;
-global uniform vec3 player_pos;
+
 uniform float curve_strength = 0.001;
-void vertex() {
-	vec3 world_pos = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	float dist = distance(world_pos.xz, player_pos.xz);
-	VERTEX.y -= pow(dist, 2.0) * curve_strength;
-}
+
 
 void light() {
 	float dotnl = dot(NORMAL, LIGHT);

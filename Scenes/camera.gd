@@ -6,7 +6,7 @@ extends Node3D
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
 		spring_arm.rotate_x(-event.relative.y * 0.005)
-		spring_arm.rotation.x = clamp(spring_arm.rotation.x, 1.0, 0.5)
+		spring_arm.rotation.x = clamp(spring_arm.rotation.x, 0, .8)
 func _process(delta):
 	if target:
 		global_position = global_position.lerp(target.global_position, delta * smooth_speed)

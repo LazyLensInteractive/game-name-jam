@@ -60,7 +60,7 @@ var shop_items = {
 #holds player current upgrade status 0 meaning not bought anything and or not active if need to be bought first
 
 func upgrade_button_pressed(type: String) -> void:
-	var current_level = GlobalData.player_upgrades[type] #gets the player current level of type from the button press (call it with the type var)
+	var current_level = GlobalData.player.upgrades[type] #gets the player current level of type from the button press (call it with the type var)
 	var next_level = current_level + 1 #adds a level
 	if shop_items[type].has(next_level): #checks if the type has a next value if not it assumes max level
 		var item_data = shop_items[type][next_level]
@@ -69,7 +69,7 @@ func upgrade_button_pressed(type: String) -> void:
 			GlobalData.player.money -= price
 			GlobalData.player.upgrades[type] = next_level
 			print("upgraded wow so cool")
-			print(GlobalData.player_upgrades)
+			print(GlobalData.player.upgrades)
 			#shop_text_update()   ignore for now but just make updating ui tomorrow 
 		else:
 			print("Get your money up lil bro")
