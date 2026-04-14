@@ -75,3 +75,18 @@ func upgrade_button_pressed(type: String) -> void:
 			print("Get your money up lil bro")
 	else:
 		print("no levels remain")
+
+
+func _on_button_2_pressed() -> void:
+	if can_buy == true:
+		upgrade_button_pressed("range")
+
+
+func _on_button_3_pressed() -> void:
+	if can_buy == true:
+		upgrade_button_pressed("bomb")
+
+
+func _on_button_4_pressed() -> void:
+	if can_buy == true:
+		upgrade_button_pressed("strength")

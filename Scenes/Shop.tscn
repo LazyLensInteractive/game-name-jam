@@ -63,3 +63,6 @@ text = "There is no game"
 [connection signal="body_entered" from="Area3D" to="Area3D" method="_on_body_entered"]
 [connection signal="body_exited" from="Area3D" to="Area3D" method="_on_body_exited"]
 [connection signal="pressed" from="ShopUI/Panel/Button" to="Area3D" method="_on_button_pressed"]
+[connection signal="pressed" from="ShopUI/Panel/Button2" to="Area3D" method="_on_button_2_pressed"]
+[connection signal="pressed" from="ShopUI/Panel/Button3" to="Area3D" method="_on_button_3_pressed"]
+[connection signal="pressed" from="ShopUI/Panel/Button4" to="Area3D" method="_on_button_4_pressed"]

@@ -1,28 +1,33 @@
 extends Node
 
-var active_region: Node3D
 var player: CharacterBody3D
-var wave: int = 1
+var regions: Array[Node] = []
+var unlocked_up_to: int = 1
 
 func _ready() -> void:
-	active_region = get_tree().get_first_node_in_group("GuyManager")
 	player = get_tree().get_first_node_in_group("Player")
-	print("[RM] active_region=", active_region)
+	regions = get_tree().get_nodes_in_group("GuyManager")
 	print("[RM] player=", player)
-	if active_region == null:
-		print("[RM] ERROR: GuyManager group empty")
-		return
-	if player == null:
-		print("[RM] ERROR: Player group empty")
-		return
-	active_region.region_cleared.connect(_on_cleared)
-	print("[RM] signal connected")
+	print("[RM] regions found=", regions.size())
+	for i in range(regions.size()):
+		print("[RM] region ", i, " = ", regions[i].name, " visible=", regions[i].visible)
+	for i in range(1, regions.size()):
+		regions[i].visible = false
+		print("[RM] hiding region ", i, " = ", regions[i].name)
 
-func _on_cleared() -> void:
-	print("[RM] _on_cleared fired. wave was=", wave)
-	wave += 1
-	print("[RM] new wave=", wave)
-	print("[RM] player pos before teleport=", player.global_position)
-	player.global_position = active_region.spawn_location.global_position + Vector3(0, 1, 0)
-	print("[RM] player pos after teleport=", player.global_position)
-	active_region.replenish(wave, wave)
+func _process(_delta: float) -> void:
+	var exp := GlobalData.player.exp
+	for region_index in GlobalData.region_unlocks:
+		if region_index <= unlocked_up_to: continue
+		if exp >= GlobalData.region_unlocks[region_index]:
+			print("[RM] exp=", exp, " threshold=", GlobalData.region_unlocks[region_index], " unlocking region ", region_index)
+			_unlock_region(region_index)
+
+func _unlock_region(index: int) -> void:
+	unlocked_up_to = index
+	print("[RM] _unlock_region index=", index, " regions.size()=", regions.size(), " array index=", index - 1)
+	if index - 1 < regions.size():
+		regions[index - 1].visible = true
+		print("[RM] made visible: ", regions[index - 1].name)
+	else:
+		print("[RM] ERROR: index-1 out of bounds")

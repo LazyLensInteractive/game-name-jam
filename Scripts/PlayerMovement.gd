@@ -1,7 +1,7 @@
 extends CharacterBody3D
 var player_health = 500
 var camera_sensitivty = 0.001 #self explanitory lower number slower 
-const BASE_SPEED_MULTIPLIER = 5
+const BASE_SPEED_MULTIPLIER = 2
 var base_speed: float = 0.0
 const JUMP_VELOCITY = 4.5
 @onready var label: Label = $"../../ui/Label"
@@ -14,7 +14,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		rotate_y(-event.relative.x * camera_sensitivty) #rotate the player body so w continues moving forward based on the camera
 func _physics_process(delta: float) -> void:
 	var current_speed = base_speed
-	if Input.is_action_pressed("ui_accept"):
+	if Input.is_action_pressed("boost"):
 		current_speed *= 2.0
 	var input_dir := Input.get_vector("left", "right", "up", "down")
 	var forward = camera.global_basis.z
@@ -36,7 +36,6 @@ func _physics_process(delta: float) -> void:
 	if location != null:
 		for region in get_tree().get_nodes_in_group("GuyManager"):
 			region.dmg_location(location, 1.5)
-	RenderingServer.global_shader_parameter_set("player_pos", global_position) #update the shader for the current player position
 	if label != null:
 		label.text = "mhhh cash:" + str(GlobalData.player.money)
 	if label == null:
@@ -71,4 +70,4 @@ func _update_base_speed() -> void:
 	var level = GlobalData.player.upgrades["speed"]
 	base_speed = float(level) * BASE_SPEED_MULTIPLIER
 	if base_speed == 0:
-		base_speed = 3.5
+		base_speed = 1.5

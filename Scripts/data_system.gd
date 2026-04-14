@@ -1,5 +1,11 @@
 extends Node
 
+var region_unlocks: Dictionary = {
+	1: 0,
+	2: 2000,
+	3: 3000,
+	4: 7000
+}
 class Player:
 	var exp: int = 0
 	var money: int = 0
